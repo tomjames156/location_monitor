@@ -3,6 +3,12 @@ let id;
 
 const locationSpace = document.getElementById("location");
 
+let options = {
+    timeout: 2000,
+    enableHighAccuracy: true,
+    maximumAge: 0
+};
+
 let showLocation = (position) => {
     let altitude = position.coords.altitude;
     if(!altitude){
@@ -31,9 +37,14 @@ let handleErrors = (error) => {
     }
 }
 
-function watchLocation(){
-    if(navigator.geolocation){
-        id = navigator.geolocation.watchPosition(showLocation, handleErrors);
+async function watchLocation(){
+    let requestAccess = new Promise(function(resolve){
+        resolve(navigator.geolocation);
+    })
+
+    let result = await requestAccess;
+    if(result){
+        id = navigator.geolocation.watchPosition(showLocation, handleErrors, options);
     }else{
         locationSpace.innerHTML = "This browser does not support geolocation";
     }

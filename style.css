@@ -48,3 +48,8 @@ main div p:nth-of-type(2){
 p.location{
     transition: all ease 0.3s;
 }
+
+p#note{
+    color: #6CE831;
+    text-align: center;
+}
